@@ -1,3 +1,37 @@
+.reveal section .block-center {
+    margin: auto;
+}
+
+.reveal section .flex {
+    display: flex;
+}
+
+.reveal section .inline {
+    display: inline;
+}
+
+.reveal section .text-center {
+    text-align: center;
+}
+
+.reveal section .flex-50 * {
+    height: auto;
+    max-width: 50%;
+    margin: 15px;
+}
+
 .reveal section img.qr-code {
     margin: 15px auto;
+}
+
+.reveal section.related-technologies table img {
+    border: 0;
+    margin: 0;
+    padding: 2px;
+    max-height: 3rem;
+    vertical-align: middle;
+}
+
+.reveal section.related-technologies table img.saltstack {
+    background-color: rgba(255, 255, 255, 0.25);
 }

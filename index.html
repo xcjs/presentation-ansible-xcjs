@@ -8,7 +8,7 @@
 
 		<link rel="stylesheet" href="dist/reset.css">
 		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/black.css" id="theme">
+		<link rel="stylesheet" href="dist/theme/leading-edje-dark.css" id="theme">
 
 		<!-- Theme used for syntax highlighted code -->
 		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
@@ -16,8 +16,21 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+				<section class="slide-title">
+					<h1>Ansible - Putting IaC in Your CI/CD</h1>
+					<img src="images/qrcode.png" alt="QR Code to this Presentation Online" class="qr-code">
+				</section>
+				<section>
+					<p>
+						
+					</p>
+					<p> <small> Presented by <a href="https://xcjs.com/">Zackary Lowery</a> <br> on January 24th, 2019 at <a
+								href="http://leadingedje.com/">Leading EDJE</a> <br> and on April 26th, 2019 at <a
+								href="https://stirtrek.com/">StirTrek</a>. </small> </p>
+					<p> <small> Available online at <a
+						href="https://xcjs.github.io/presentation-of-crickets-and-continuous-integration/">
+						https://xcjs.github.io/presentation-of-crickets-and-continuous-integration/ </a> </small> </p>
+				</section>
 			</div>
 		</div>
 
@@ -31,7 +44,7 @@
 			// - https://revealjs.com/config/
 			Reveal.initialize({
 				hash: true,
-
+				history: true,
 				// Learn about plugins: https://revealjs.com/plugins/
 				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
 			});

@@ -39,47 +39,151 @@
 					</p>					
 				</section>
 				<section>
-					<h2>Primary Traits of IaC Tooling</h2>					
-					<table>
-						<thead>
-							<tr>
-								<th>Configuration Management</th>
-								<th>Provisioning</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>
-									Manage existing infrastructure through
-									software installation and configuration.
-								</td>
-								<td>
-									Supply new infrastructure such as servers,
-									networking equipment, or other hardware.
-								</td>
-							</tr>
-						</tbody>
-					</table>
-					<aside class="notes">
+					<section>
+						<h2>
+							Traits of IaC Tooling
+						</h2>
 						<p>
-							These traits in IaC tooling are not mutually
-							exclusive.
+							<small>
+								Selectively sourced from Gruntwork's
+								<a href="https://blog.gruntwork.io/why-we-use-terraform-and-not-chef-puppet-ansible-saltstack-or-cloudformation-7989dad2865c#64a6">
+									Why we use Terraform and not Chef, Puppet, 
+									Ansible, SaltStack, or CloudFormation
+								</a>
+							</small>
 						</p>
-					</aside>
-				</section>
-				<section>
+						<aside class="notes">
+							<p>
+								These traits in IaC tooling are not mutually
+								exclusive.
+							</p>
+						</aside>
+					</section>
+					<section>
+						<h3>The Primary Trait of IaC Tooling</h3>					
+						<table class="vertical">
+							<thead>
+								<tr>
+									<th>Configuration Management</th>
+									<th>Provisioning</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>
+										Manage existing infrastructure through
+										software installation and configuration.
+									</td>
+									<td>
+										Supply new infrastructure such as servers,
+										network routes, or other systems.
+									</td>
+								</tr>
+							</tbody>
+						</table>					
+					</section>
+					<section>
+						<h2>Secondary Traits of IaC Tooling</h2>
+						<table>
+							<thead>
+								<tr>
+									<th>
+										Trait
+									</th>
+									<th>
+										Types
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>
+										Mutability
+									</td>
+									<td>
+										Mutable vs. Immutable
+									</td>
+								</tr>
+								<tr>
+									<td>
+										Syntax
+									</td>
+									<td>
+										Declarative vs. Procedural
+									</td>
+								</tr>
+								<tr>
+									<td>
+										Mastered
+									</td>
+									<td>
+										Master vs. Masterless
+									</td>
+								</tr>
+								<tr>
+									<td>
+										Agented
+									</td>
+									<td>
+										Agented vs. Agentless
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</section>			
+				</section>	
+				<section class="utilized-technologies">
 					<h2>Utilized Technologies</h2>
-					<div class="flex flex-50">
+					<div class="row">
 						<div class="text-center">
 							Configuration Management
-							<img class="block-center" src="images/ansible-logo.png" alt="Ansible Logo">
 						</div>
 						<div class="text-center">
 							Version Control and CI/CD
+						</div>											
+					</div>
+					<div class="row">
+						<div>
+							<img class="block-center" src="images/ansible-logo.png" alt="Ansible Logo">
+						</div>
+						<div>
 							<img class="block-center" src="images/gitlab-logo.png" alt="GitLab Logo">
 						</div>											
 					</div>
 				</section>
+				<section>
+					<h3>
+						Ansible Traits
+					</h3>
+					<ul>
+						<li>
+							Configuration Manager*
+							<br>
+							<small>
+								* primarily out of the box
+							</small>
+						</li>
+						<li>
+							Declarative*
+							<br>
+							<small>
+								* when used as a configuration manager
+							</small>
+						</li>
+						<li>
+							Masterless
+						</li>
+						<li>
+							Agentless
+						</li>
+					</ul>
+					<aside class="notes">
+						<p>
+							Mention that masterless and agentless are traits
+							that I personally like about Ansible.
+						</p>
+					</aside>
+				</section>										
 				<section class="related-technologies">
 					<h2>Related Technologies</h2>
 					<table>
@@ -141,6 +245,51 @@
 							</tr>							
 						</tbody>
 					</table>
+				</section>
+				<section>
+					<h2>What do I like about Ansible?</h2>
+					<ul>
+						<li>
+							Stateful
+						</li>
+						<li>
+							Utilizes SSH
+						</li>
+						<li>
+							Cross-Platform
+						</li>
+						<li>
+							Iterative
+						</li>
+					</ul>
+					<aside class="notes">
+						<ul>
+							<li>
+								Avoids executing items in matching state.
+							</li>
+							<li>
+								Utilizes a standard secure protocol for client
+								management.
+							</li>
+							<li>
+								Modules can be cross-platform or add support for
+								a new platform explicitly.
+								<br>
+								<br>
+								On unsupported platforms, can execute arbitrary
+								shell commands since SSH is used for a remote
+								shell.
+								<br>
+								<br>
+								Linux host required for ansible-playbook.
+							</li>
+							<li>
+								I can "patch" my configuration without a full
+								redeploy, though this can result in
+								configuration drift.
+							</li>
+						</ul>
+					</aside>
 				</section>
 			</div>
 		</div>

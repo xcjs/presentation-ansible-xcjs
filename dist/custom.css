@@ -14,10 +14,33 @@
     text-align: center;
 }
 
+.reveal section table.vertical td,
+.reveal section table.vertical th {
+    border-bottom: none;
+    border-right: 1px solid currentColor;
+    border-top: none;
+}
+
+.reveal section table.vertical td:last-child,
+.reveal section table.vertical th:last-child {
+    border-bottom: none;
+    border-right: none;
+    border-top: none;
+}
+
 .reveal section .flex-50 * {
     height: auto;
     max-width: 50%;
     margin: 15px;
+}
+
+.reveal section .row {
+    display: table-row;
+}
+
+.reveal section .row > * {
+    display: table-cell;
+    vertical-align: top;
 }
 
 .reveal section img.qr-code {
@@ -34,4 +57,8 @@
 
 .reveal section.related-technologies table img.saltstack {
     background-color: rgba(255, 255, 255, 0.25);
+}
+
+.reveal section.utilized-technologies img {
+    max-width: 50%;
 }

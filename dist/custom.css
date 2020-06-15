@@ -14,6 +14,13 @@
     text-align: center;
 }
 
+.reveal section img.plain {
+    background: none;
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
 .reveal section table.vertical td,
 .reveal section table.vertical th {
     border-bottom: none;
@@ -61,4 +68,14 @@
 
 .reveal section.utilized-technologies img {
     max-width: 50%;
+}
+
+.reveal section.i-have-a-lot-of-hardware table {
+    font-size: 1.5rem;
+}
+
+.reveal section.i-have-a-lot-of-hardware table img {
+    display: inline;
+    max-height: 1.5rem;
+    vertical-align: middle;
 }

@@ -454,22 +454,103 @@
 						<h2>Getting Started with Ansible</h2>
 					</section>
 					<section>
-						<h3>Inventory</h3>
+						<h3>Inventory File</h3>
+						<ul>
+							<li>Lists hosts available to configure</li>
+							<li>Available in INI or YAML flavors</li>
+							<li>You're going to want to use YAML</li>
+							<li>Hosts can be grouped</li>
+							<li>Usually named "hosts", "hosts.ini", or "hosts.yml"</li>
+						</ul>
+						<aside class="notes">
+							<p>
+								Mention that hosts can be listed in more than
+								one group
+							</p>
+						</aside>
 					</section>
 					<section>
 						<h3>Roles</h3>
+						<ul>
+							<li>Interdependent or independent collection of variables, tasks, files, templates, or modules</li>
+							<li>Basic building block of a playbook</li>
+						</ul>
 					</section>
 					<section>
 						<h3>Tasks</h3>
+						<ul>
+							<li>Call to an Ansible module</li>
+							<li>Each task usually provides a set of return values that can optionally be used later</li>
+						</ul>
+					</section>					
+					<section>
+						<h3>Playbook</h3>
+						<ul>
+							<li>Assigns roles to hosts from the inventory</li>
+							<li>Assignments can be listed by host, several hosts, or a group</li>
+							<li>Usually named "site.yml" or by another logical grouping such as geographical location</li>
+						</ul>
 					</section>
 					<section>
 						<h3>Variables</h3>
+						<ul>
+							<li>Variables can be referenced, assigned, or looped over</li>
+							<li>Accessed via the Jinja2 template language within tasks or file templates</li>							
+						</ul>
 					</section>
 					<section>
-						<h3>Playbook</h3>
+						<h3>Variable Assignment</h3>
+						<ul>
+							<li>In the playbook</li>
+							<li>Task result via the "register" keyword</li>
+							<li>Set from the command line</li>
+						</ul>
 					</section>
 					<section>
-						<h3>Filesystem Hierarchy</h3>
+						<h3>Variable Scope</h3>
+						<ul>
+							<li>Global</li>
+							<li>Playbook</li>
+							<li>Host</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Facts</h3>
+						<p>
+							Facts are variables gathered from the host before
+							Ansible begins the playbook.
+						</p>
+					</section>
+					<section>
+						<h3>Typical Filesystem Hierarchy</h3>
+						<ul>
+							<li>
+								roles/
+								<ul>
+									<li>
+										example-role/
+										<ul>
+											<li>files/</li>
+											<li>
+												tasks/
+												<ul>
+													<li>tasks.yml</li>
+												</ul>
+											</li>
+											<li>templates/</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+							<li>hosts.yml</li>
+							<li>site.yml</li>
+						</ul>
+						<aside class="notes">
+							<p>
+								Mention that there is a lot of flexibility here,
+								and while this is typical, it is not definitive.
+							</p>
+						</aside>
 					</section>
 				</section>				
 				<section>

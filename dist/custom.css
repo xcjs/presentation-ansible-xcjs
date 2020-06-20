@@ -79,3 +79,8 @@
     max-height: 1.5rem;
     vertical-align: middle;
 }
+
+.reveal section.supporting-windows-in-the-inventory-1 img {
+    margin: auto;
+    max-height: 20rem;
+}

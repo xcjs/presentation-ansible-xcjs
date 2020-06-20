@@ -534,7 +534,7 @@
 											<li>
 												tasks/
 												<ul>
-													<li>tasks.yml</li>
+													<li>main.yml</li>
 												</ul>
 											</li>
 											<li>templates/</li>
@@ -579,8 +579,7 @@
 					</section>
 					<section>
 						<h3>My Inventory</h3>
-						<h4>inventory.yml</h4>						
-						<p><small>(instead of hosts.yml)</small></p>
+						<h4>inventory.yml <small>(instead of hosts.yml)</small></h4>
 						<ul>
 							<li>Specialized hosts such as GNUBEE and LAKKA are ungrouped</li>
 							<li>Remaining hosts are grouped as either clients or servers</li>
@@ -588,21 +587,168 @@
 					</section>
 					<section>
 						<h3>Applications as Roles</h3>
-					</section>
-					<section>
-						<h3>Containers as Roles</h3>
+						<h4>roles/build-essential/tasks/main.yml</h4>
+						<pre><code data-trim data-noescape>
+							---							
+							- name: Install build-essential
+							  apt:
+								name: build-essential
+								update_cache: yes
+						</code></pre>
 					</section>
 					<section>
 						<h3>Dependent Roles</h3>
+						<h4>roles/nodejs/tasks/ubuntu.yml</h4>
+						<pre><code data-trim data-noescape>
+							---
+							- name: Require the build-essential role
+							  include_role:
+							    name: build-essential
+							
+							- name: Execute the Node.js 12 LTS install script
+							  script: node_setup_12.x
+							
+							- name: Install nodejs
+							  apt:
+							    name: nodejs
+								update_cache: yes
+						</code></pre>
 					</section>
 					<section>
+						<h3>Containers as Roles</h3>
+						<h4>roles/plex/tasks/ubuntu.yml</h4>
+						<pre><code data-trim data-noescape>
+							# ...
+							- name: Start the plex container
+							  docker_compose:
+							    build: yes
+							    project_src: /tmp/ansible/roles/plex/files/
+							  environment:
+							    # Lines that begin with {{ need to be quoted
+							    # to avoid defining a YAML dictionary
+							    DOCKER_DATA: "{{ docker_data }}"
+							    PLEX_GID: "{{ plex_group.gid }}"
+							    PLEX_UID: "{{ plex_user.uid }}"
+							    PLEX_MEDIA: "{{ plex_media }}"
+						</code></pre>
+						<aside class="notes">
+							<p>
+								Docker containers with matching names but
+								different configurations are destroyed and
+								recreated.
+							</p>
+							<p>
+								Explain the environment node - this defines
+								shell variables that expire with the task.
+							</p>
+							<p>
+								Each task in Ansible has its own sub-shell.
+							</p>							
+						</aside>
+					</section>
+					<section>
+						<h3>Containers as Roles: Host Variables</h3>
+						<h4>inventory.yml</h4>
+						<pre><code data-trim data-noescape>
+							---
+							all:
+							  vars:
+							    docker_data: /srv/
+							    plex_media: /mnt/cloud/media
+							  hosts:
+							    children:
+							      servers:
+							        hosts:
+							          cloud.xcjs.com:
+							            vars:
+							              hostname: CLOUD
+						</code></pre>
+					</section>			
+					<section>
+						<h3>Containers as Roles: Return Values</h3>
+						<h4>roles/plex/tasks/ubuntu.yml</h4>
+						<pre><code data-trim data-noescape>
+							# ...
+							- name: Create the plex user
+							  user:
+							    name: plex
+							    create_home: no
+							    system: yes
+							    group: plex
+							  # Registers task result as a variable named plex_user
+							  register: plex_user 
+							# ...
+							# Use plex_user.uid later to get the user's ID
+						</code></pre>
+						<aside class="notes">
+							Tell the audience that task result schemas are
+							documented in the Ansible docs.
+						</aside>
+					</section>
+					<section class="supporting-windows-in-the-inventory-1">
 						<h3>Supporting Windows in the Inventory</h3>
+						<ol>
+							<li>Windows 10 added OpenSSH support in April 2018</li>
+							<li>Ansible assumes Linux = SSH, Windows = WinRM</li>
+						</ol>
+						<img src="images/windows-10-features-openssh.png" alt="OpenSSH as a feature of Windows 10">
 					</section>
 					<section>
-						<h3>Supporting Windows in Tasks</h3>
+						<h3>Supporting Windows in the Inventory: Example</h3>
+						<h4>inventory.yml</h4>
+						<pre><code data-trim data-noescape>
+							# ...
+							x99.local:
+							  ansible_become: false
+							  ansible_connection: ssh
+							  ansible_distribution: Microsoft Windows 10 Professional
+							  ansible_shell_type: cmd
+							  ansible_os_family: windows
+							  ansible_user: Zack
+							  vars:
+							    docker_data: C:/srv/
+							# ...
+						</code></pre>
 					</section>
 					<section>
-						<h3>To-do</h3>
+						<h3>Supporting Windows in Tasks: Main</h3>
+						<h4>roles/firefox/tasks/main.yml</h4>
+						<pre><code data-trim data-noescape>
+							---
+							- name: Execute the Ubuntu task list
+							  when: ansible_distribution == "Ubuntu"
+							  include_tasks: ubuntu.yml
+							
+							- name: Execute the Windows task list
+							  when: ansible_os_family == "windows"
+							  include_tasks: windows.yml
+						</code></pre>
+					</section>
+					<section>
+						<h3>Supporting Windows in Tasks: Ubuntu</h3>
+						<h4>roles/firefox/tasks/ubuntu.yml</h4>
+						<pre><code data-trim data-noescape>
+							---
+							- name: Install firefox
+							  apt:
+							    name: firefox
+							    update_cache: yes
+
+						</code></pre>
+					</section>
+					<section>
+						<h3>Supporting Windows in Tasks: Windows</h3>
+						<h4>roles/firefox/tasks/windows.yml</h4>
+						<pre><code data-trim data-noescape>
+							---
+							- name: Install firefox
+							  win_chocolatey:
+							    name: firefox
+							    state: latest
+						</code></pre>
+					</section>					
+					<section>
+						<h3>Future Endeavors</h3>
 						<ul>
 							<li>Discover/reverse-engineer specialized configurations</li>
 							<li>Certificate management</li>

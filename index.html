@@ -558,6 +558,35 @@
 						<h2>Using Ansible at Home</h2>
 					</section>
 					<section>
+						<h3>Inventory Example</h3>
+						<h4>hosts.yml</h4>						
+						<pre><code data-trim data-noescape>
+							all:
+							  hosts:
+							    ungrouped-host:
+							      ansible_*: Override Ansible config/fact
+							      vars:
+							        host_var: example value
+							  vars:
+							    global_var: example value
+
+							  children:
+							    group:
+							      hosts:
+							        grouped-host:
+							          # Each host can have its own vars/overrides.
+						</code></pre>
+					</section>
+					<section>
+						<h3>My Inventory</h3>
+						<h4>inventory.yml</h4>						
+						<p><small>(instead of hosts.yml)</small></p>
+						<ul>
+							<li>Specialized hosts such as GNUBEE and LAKKA are ungrouped</li>
+							<li>Remaining hosts are grouped as either clients or servers</li>
+						</ul>
+					</section>
+					<section>
 						<h3>Applications as Roles</h3>
 					</section>
 					<section>
@@ -567,7 +596,10 @@
 						<h3>Dependent Roles</h3>
 					</section>
 					<section>
-						<h3>Supporting Windows</h3>
+						<h3>Supporting Windows in the Inventory</h3>
+					</section>
+					<section>
+						<h3>Supporting Windows in Tasks</h3>
 					</section>
 					<section>
 						<h3>To-do</h3>

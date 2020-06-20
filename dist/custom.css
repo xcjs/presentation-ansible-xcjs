@@ -35,6 +35,10 @@
     border-top: none;
 }
 
+.reveal section table.vertical-align-top td {
+    vertical-align: top;
+}
+
 .reveal section .flex-50 * {
     height: auto;
     max-width: 50%;

@@ -767,13 +767,155 @@
 						<h2>CI/CD with GitLab</h2>
 					</section>
 					<section>
-						<h3>Lint</h3>
+						<h3>Branching Strategy</h3>
+						<table class="vertical-align-top">
+							<thead>
+								<tr>
+									<th>
+										Branch
+									</th>
+									<th>
+										Stages
+									</th>
+									<th>
+										Jobs
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<th>
+										feature/*
+										<br>
+										<small>(from master)</small>
+										<br>
+										<small>(to staging)</small>
+									</th>
+									<td>
+										<ol>
+											<li>Lint</li>
+											<li>Test</li>
+										</ol>
+									</td>
+									<td>
+										<ol>
+											<li>Lint</li>
+											<li>Test Ubuntu 18.04 VM</li>
+											<li>Test Windows 10 VM</li>
+										</ol>
+									</td>
+								</tr>
+								<tr>
+									<th>
+										staging
+										<br>
+										<small>(to master)</small>
+									</th>
+									<td>
+										<ol>
+											<li>Lint</li>
+											<li>Test</li>
+										</ol>
+									</td>
+									<td>
+										<ol>
+											<li>Lint</li>
+											<li>Ansible Dry Run</li>
+										</ol>
+									</td>
+								</tr>
+								<tr>
+									<th>
+										master
+									</th>
+									<td>
+										<ol>
+											<li>Lint</li>
+											<li>Test</li>
+											<li>Deploy</li>
+										</ol>						
+									</td>
+									<td>
+										<ol>
+											<li>Lint</li>
+											<li>Ansible Dry Run</li>
+											<li>Deploy</li>
+										</ol>
+									</td>
+								</tr>																
+							</tbody>
+						</table>
 					</section>
 					<section>
-						<h3>Test</h3>
+						<h3>Lint</h3>
+						<h4>.gitlab-ci.yml</h4>
+						<pre><code data-trim data-noescape>
+							---
+							# ...
+							Lint Playbooks:
+							  stage: Lint
+							  script:
+							    - ansible-playbook -i 127.0.0.1, --syntax-check site-test-ubuntu.yml
+							    - ansible-playbook -i 127.0.0.1, --syntax-check site-test-windows10.yml
+							    - ansible-playbook -i inventory.yml --syntax-check site.yml
+							# ...
+						</code></pre>
+					</section>
+					<section>
+						<h3>Test: Virtual Machine Run</h3>
+						<h4>.gitlab-ci.yml</h4>
+						<pre><code data-trim data-noescape>
+							---
+							# ...
+							Test Ubuntu 18.04:
+							  except:
+							    refs:
+							      - master
+							      - staging
+							  stage: Test
+							  before_script:
+							    - vagrant destroy --force
+							    - vagrant plugin install vagrant-vbguest
+							    - vagrant box update
+							  script:
+							    - vagrant up ubuntu
+							  after_script:
+							    - vagrant destroy --force
+							# ...
+						</code></pre>
+					</section>
+					<section>
+						<h3>Test: Dry Run</h3>
+						<h4>.gitlab-ci.yml</h4>
+						<pre><code data-trim data-noescape>
+							---
+							# ...
+							Dry Run:
+							  only:
+							    refs:
+							      - master
+							      - staging
+							  stage: Test
+							  script:
+							    - ansible-playbook -i inventory.yml --check site.yml
+							# ...
+						</code></pre>
 					</section>
 					<section>
 						<h3>Deploy</h3>
+						<h4>.gitlab-ci.yml</h4>
+						<pre><code data-trim data-noescape>
+							---
+							# ...
+							Deploy:
+							  only:
+							    refs:
+							      - master
+							  stage: Deploy
+							  script:
+								- ansible-playbook -i inventory.yml site.yml
+							# ...
+						</code></pre>
 					</section>
 				</section>
 				<section>

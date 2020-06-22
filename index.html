@@ -687,6 +687,19 @@
 							documented in the Ansible docs.
 						</aside>
 					</section>
+					<section>
+						<h3>Supporting Offline Hosts</h3>
+						<h4>site.yml</h4>
+						<pre><code data-trim data-noescape>
+							# ...
+							- name: Clients
+							  hosts: clients
+							  ignore_errors: true
+							  ignore_unreachable: true
+							  roles:
+							# ...
+					</code></pre>
+					</section>
 					<section class="supporting-windows-in-the-inventory-1">
 						<h3>Supporting Windows in the Inventory</h3>
 						<ol>
